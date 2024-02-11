@@ -10,7 +10,7 @@ export const mainApi = createApi({
         method: "GET",
         params: {
           limitToFirst: 100,
-          orderBy: '"time"',
+          orderBy: '"$key"',
         },
       }),
       /* transformResponse: (response: ServerResponse<any>) => response */
