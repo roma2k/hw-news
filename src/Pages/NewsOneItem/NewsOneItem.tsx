@@ -33,6 +33,7 @@ const NewsOneItem: React.FC = () => {
               <small>{String(new Date(item.time * 1000))}</small>
             </p>
             {item?.text && <p>{item.text}</p>}
+          <p>Go ahead <a href={item.url}>{item.url}</a></p>
           </>
         ))}
     </div>

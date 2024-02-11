@@ -11,13 +11,17 @@ const MainPage: React.FC = () => {
     pollingInterval: 60000,
   });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <>
       {isSuccess ? (
         <ul>
           {newsList.map((item) => (
-            <li key={item} onClick={() => navigate(`/item/${item}`)}>
+            <li
+              key={item}
+              onClick={() => navigate(`/item/${item}`)}
+              style={{ cursor: "pointer" }}
+            >
               {item}
             </li>
           ))}
