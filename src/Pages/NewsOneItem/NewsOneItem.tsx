@@ -4,14 +4,14 @@ import { useEffect } from "react";
 
 const NewsOneItem: React.FC = () => {
   const [getItem, { isLoading: oneLoading, isFetching, data: oneNewsItem }] =
-    mainApi.useLazyGetItemQuery();
+    mainApi.useLazyGetItemQuery({});
 
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
 
   useEffect(() => {
     params?.id &&
-      getItem(Number(params.id)).unwrap()
+      getItem(Number(params.id), true).unwrap()
         .then((e) => {
           e === null && navigate("/error");
         })
