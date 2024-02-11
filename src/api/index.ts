@@ -4,13 +4,14 @@ export const mainApi = createApi({
   reducerPath: "mainApi",
   baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_API_URL }),
   endpoints: (builder) => ({
-    getNewsList: builder.query({
-      query: () => ({
+    getNewsList: builder.query<number[], number>({
+      query: (limitToFirst) => ({
         url: `/newstories.json`,
         method: "GET",
         params: {
-          limitToFirst: 100,
+          limitToFirst,
           orderBy: '"$key"',
+          print: "pretty",
         },
       }),
       /* transformResponse: (response: ServerResponse<any>) => response */
