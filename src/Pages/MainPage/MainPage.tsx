@@ -1,17 +1,7 @@
+import { useNavigate } from "react-router-dom";
 import { mainApi } from "../../api";
 import React from "react";
 
-export interface ione {
-  by: string;
-  descendants: number;
-  id: number;
-  kids: number[];
-  score: number;
-  time: number;
-  title: string;
-  type: string;
-  url: string;
-}
 const MainPage: React.FC = () => {
   const {
     data: newsList,
@@ -21,25 +11,13 @@ const MainPage: React.FC = () => {
     pollingInterval: 60000,
   });
 
-  const [getItem, { isLoading: oneLoading, isFetching }] = mainApi.useLazyGetItemQuery();
-
-  const [item, setItem] = React.useState<number | undefined>(undefined);
-  const [one, setOne] = React.useState<ione | undefined>(undefined);
-
-  React.useEffect(() => {
-    console.log(item);
-    item &&
-      getItem(item)
-        .unwrap()
-        .then((e) => setOne(e));
-  }, [item]);
-
+  const navigate = useNavigate()
   return (
     <>
       {isSuccess ? (
         <ul>
           {newsList.map((item) => (
-            <li key={item} onClick={() => setItem(item)}>
+            <li key={item} onClick={() => navigate(`/item/${item}`)}>
               {item}
             </li>
           ))}
@@ -47,19 +25,6 @@ const MainPage: React.FC = () => {
       ) : (
         <>loading</>
       )}
-      <div>
-        {one &&
-          (oneLoading || isFetching ? (
-            <>...loading</>
-          ) : (
-            <>
-              <h3>{one.title}</h3>
-              <p>
-                <small>{String(new Date(one.time * 1000))}</small>
-              </p>
-            </>
-          ))}
-      </div>
     </>
   );
 };

@@ -1,6 +1,15 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ione } from "../Pages/MainPage/MainPage";
-
+export interface InterFaceNewsUnit {
+  by: string;
+  descendants: number;
+  id: number;
+  kids: number[];
+  score: number;
+  time: number;
+  title: string;
+  type: string;
+  url: string;
+}
 const print = "pretty";
 export const mainApi = createApi({
   reducerPath: "mainApi",
@@ -17,7 +26,7 @@ export const mainApi = createApi({
         },
       }),
     }),
-    getItem: builder.query<ione, number>({
+    getItem: builder.query<InterFaceNewsUnit, number>({
       query: (id) => ({
         url: `/item/${id}.json?print=pretty`,
         method: "GET",
