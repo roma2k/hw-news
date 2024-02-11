@@ -9,6 +9,7 @@ export interface InterFaceNewsUnit {
   title: string;
   type: string;
   url: string;
+  text?: string
 }
 const print = "pretty";
 export const mainApi = createApi({

@@ -3,7 +3,7 @@ import { mainApi } from "../../api";
 import { useEffect } from "react";
 
 const NewsOneItem: React.FC = () => {
-  const [getItem, { isLoading: oneLoading, isFetching, data: oneNewsItem }] =
+  const [getItem, { isLoading: oneLoading, isFetching, data: item }] =
     mainApi.useLazyGetItemQuery({});
 
   const params = useParams<{ id: string }>();
@@ -11,7 +11,8 @@ const NewsOneItem: React.FC = () => {
 
   useEffect(() => {
     params?.id &&
-      getItem(Number(params.id), true).unwrap()
+      getItem(Number(params.id), true)
+        .unwrap()
         .then((e) => {
           e === null && navigate("/error");
         })
@@ -22,16 +23,16 @@ const NewsOneItem: React.FC = () => {
 
   return (
     <div>
-      onenews
-      {oneNewsItem &&
+      {item &&
         (oneLoading || isFetching ? (
           <>...loading</>
         ) : (
           <>
-            <h3>{oneNewsItem.title}</h3>
+            <h3>{item.title}</h3>
             <p>
-              <small>{String(new Date(oneNewsItem.time * 1000))}</small>
+              <small>{String(new Date(item.time * 1000))}</small>
             </p>
+            {item?.text && <p>{item.text}</p>}
           </>
         ))}
     </div>
