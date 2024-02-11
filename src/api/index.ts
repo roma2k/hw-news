@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { ione } from "../Pages/MainPage/MainPage";
 
 const print = "pretty";
 export const mainApi = createApi({
@@ -16,9 +17,9 @@ export const mainApi = createApi({
         },
       }),
     }),
-    getItem: builder.query({
+    getItem: builder.query<ione, number>({
       query: (id) => ({
-        url: `/${id}.json?print=pretty`,
+        url: `/item/${id}.json?print=pretty`,
         method: "GET",
         params: {
           print,
