@@ -1,14 +1,33 @@
-import { Link, Outlet } from "react-router-dom";
 import { mainApi } from "../../api";
 import React from "react";
 
 const MainPage: React.FC = () => {
-  const { data: newsList } = mainApi.useGetNewsListQuery(100, { pollingInterval: 60000 });
+  const {
+    data: newsList,
+    isLoading,
+    isSuccess,
+  } = mainApi.useGetNewsListQuery(10, {
+    pollingInterval: 60000,
+  });
+
+  const [item, setItem] = React.useState()
 
   React.useEffect(() => {
     console.log(newsList);
   }, [newsList]);
-  return <>Mainpage</>;
+  return (
+    <>
+      {isSuccess ? (
+        <ul>
+          {newsList.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      ) : (
+        <>loading</>
+      )}
+    </>
+  );
 };
 
 export default MainPage;
