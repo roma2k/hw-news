@@ -1,6 +1,30 @@
 import { useParams } from "react-router-dom";
 import { mainApi } from "../../api";
 import { Comment } from "../../Components";
+import styled from "styled-components";
+
+const config = {
+  pollingInterval: 60000,
+};
+
+const StyledNewsOneItemContainer = styled.div`
+  min-height: 100px;
+  margin-bottom: 20px;
+  padding: 0 12px;
+`;
+
+const StyledNewsOneItemBody = styled.div`
+  min-height: 100px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 0 12px;
+  background: #f5e2c6;
+
+  .comments-bottom {
+    display: flex;
+    gap: 20px;
+  }
+`;
 
 const NewsOneItem: React.FC = () => {
   const params = useParams<{ id: string }>();
@@ -8,28 +32,49 @@ const NewsOneItem: React.FC = () => {
     data: item,
     isFetching,
     refetch,
-  } = mainApi.useGetItemQuery(Number(params.id), { pollingInterval: 60000 });
+  } = mainApi.useGetItemQuery(Number(params.id), config);
 
   return (
-    <div>
+    <StyledNewsOneItemContainer>
       {item && (
-        <div>
-          <h1>{item.title}</h1>
-          <div>
+        <>
+          <StyledNewsOneItemBody>
+            <h3>{item?.title}</h3>
             <p>
-              <small>{String(new Date(item.time * 1000))}</small>
+              <a href={item?.url}>{item?.url} </a>
             </p>
-            {item?.text && <p>{item.text}</p>}
-            <p>
-              <a href={item.url} target="_blank" rel="noreferrer">
-                {item.url}
-              </a>
-            </p>
-          </div>
+            <div className="comments-bottom">
+              <div>
+                <p>
+                  <small>Rating: {item?.score || "n/a"}</small>
+                </p>
+              </div>
+              <div>
+                <p>
+                  <small>Author: {item?.by || "n/a"}</small>
+                </p>
+              </div>
+              <div>
+                <p>
+                  <small>
+                    Date:{" "}
+                    {(item?.time &&
+                      new Date(item?.time * 1000).toDateString()) ||
+                      "n/a"}
+                  </small>
+                </p>
+              </div>
+              <div>
+                <p>
+                  <small>Comments: {item?.descendants ?? "0"}</small>
+                </p>
+              </div>
+            </div>
+          </StyledNewsOneItemBody>
           <div>
             <h2>Comments</h2>
             <p>
-              <button onClick={refetch}>Renew comments</button>
+              <button onClick={refetch}>Refresh comments</button>
             </p>
             {item?.kids ? (
               item?.kids?.map((comment) => (
@@ -43,9 +88,9 @@ const NewsOneItem: React.FC = () => {
               <>Empty</>
             )}
           </div>
-        </div>
+        </>
       )}
-    </div>
+    </StyledNewsOneItemContainer>
   );
 };
 

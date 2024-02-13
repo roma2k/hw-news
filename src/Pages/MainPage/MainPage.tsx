@@ -1,30 +1,39 @@
-import { useNavigate } from "react-router-dom";
 import { mainApi } from "../../api";
 import { ShortItem } from "../../Components";
 
+const config = {
+  count: 100,
+  poolingInterval: 60000,
+};
+
 const MainPage: React.FC = () => {
-  const { data: newsList, isSuccess } = mainApi.useGetNewsListQuery(100, {
-    pollingInterval: 60000,
+  const {
+    data: newsList,
+    isSuccess,
+    refetch,
+  } = mainApi.useGetNewsListQuery(config.count, {
+    pollingInterval: config.poolingInterval,
   });
 
-  const navigate = useNavigate();
   return (
-    <>
+    <div>
       {isSuccess ? (
-        <ul>
-          {newsList.map((item) => (
-            <li
-              onClick={() => navigate(`/item/${item}`)}
-              style={{ cursor: "pointer" }}
-            >
-              <ShortItem id={item} />
-            </li>
-          ))}
-        </ul>
+        <div>
+          <div>
+            <p>
+              <button onClick={refetch}>Refresh news</button>
+            </p>
+          </div>
+          <div>
+            {newsList.map((item) => (
+              <ShortItem id={item} key={item} />
+            ))}
+          </div>
+        </div>
       ) : (
         <>loading</>
       )}
-    </>
+    </div>
   );
 };
 
