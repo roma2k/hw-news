@@ -11,9 +11,7 @@ const Comment: React.FC<{ id: number; parentFetching: boolean }> = ({
     data: item,
     refetch: getItem,
     isFetching,
-  } = mainApi.useGetItemQuery(id, {
-    refetchOnFocus: true,
-  });
+  } = mainApi.useGetItemQuery(id, {});
 
   useEffect(() => {
     parentFetching && getItem();
