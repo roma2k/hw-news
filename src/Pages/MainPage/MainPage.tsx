@@ -1,11 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { mainApi } from "../../api";
-import { ShortItemWrapper } from "./helpers";
+import { ShortItemWrapper } from "../../Components/ShortItemWrapper";
 
 const MainPage: React.FC = () => {
   const {
     data: newsList,
-    isLoading,
     isSuccess,
   } = mainApi.useGetNewsListQuery(100, {
     pollingInterval: 60000,
