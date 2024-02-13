@@ -19,8 +19,7 @@ const Comment: React.FC<{ id: number; parentFetching: boolean }> = ({
 
   return (
     <div>
-      <h3>Comment {id}</h3>
-      <p>{item?.title}</p>
+      <h3>{item?.title} {id}</h3>
       <p>{item?.text}</p>
       <div style={{ marginLeft: 50 }}>
         {item?.kids && (
