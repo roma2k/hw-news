@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { mainApi } from "../../api";
-import React from "react";
+import { ShortItemWrapper } from "./helpers";
 
 const MainPage: React.FC = () => {
   const {
     data: newsList,
     isLoading,
     isSuccess,
-  } = mainApi.useGetNewsListQuery(10, {
+  } = mainApi.useGetNewsListQuery(100, {
     pollingInterval: 60000,
   });
 
@@ -18,11 +18,10 @@ const MainPage: React.FC = () => {
         <ul>
           {newsList.map((item) => (
             <li
-              key={item}
               onClick={() => navigate(`/item/${item}`)}
               style={{ cursor: "pointer" }}
             >
-              {item}
+              <ShortItemWrapper id={item} />
             </li>
           ))}
         </ul>
