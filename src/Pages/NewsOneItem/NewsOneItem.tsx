@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Comment } from '../../Components'
 
 const NewsOneItem: React.FC = () => {
-  const [getItem, { isLoading: oneLoading, isFetching, data: item }] =
+  const [getItem, { isLoading: isFetching, data: item }] =
     mainApi.useLazyGetItemQuery({pollingInterval: 60000});
 
   const params = useParams<{ id: string }>();
