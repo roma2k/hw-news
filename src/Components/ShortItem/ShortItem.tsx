@@ -2,7 +2,7 @@ import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import { mainApi } from "../../api";
 
-const ShortItemWrapper: React.FC<{ id: number }> = ({ id }) => {
+const ShortItem: React.FC<{ id: number }> = ({ id }) => {
   const [getItem, { isLoading: oneLoading, isFetching, data: item }] =
     mainApi.useLazyGetItemQuery();
   const { ref, inView } = useInView({
@@ -20,4 +20,4 @@ const ShortItemWrapper: React.FC<{ id: number }> = ({ id }) => {
   );
 };
 
-export default ShortItemWrapper
+export default ShortItem

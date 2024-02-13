@@ -3,13 +3,14 @@ export interface InterFaceNewsUnit {
   by: string;
   descendants: number;
   id: number;
-  kids: number[];
+  kids?: number[];
   score: number;
   time: number;
   title: string;
   type: string;
   url: string;
-  text?: string
+  text?: string;
+  parent?: number;
 }
 const print = "pretty";
 export const mainApi = createApi({

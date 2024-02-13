@@ -1,10 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { mainApi } from "../../api";
 import { useEffect } from "react";
+import { Comment } from '../../Components'
 
 const NewsOneItem: React.FC = () => {
   const [getItem, { isLoading: oneLoading, isFetching, data: item }] =
-    mainApi.useLazyGetItemQuery({});
+    mainApi.useLazyGetItemQuery({pollingInterval: 60000});
 
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -24,21 +25,27 @@ const NewsOneItem: React.FC = () => {
   return (
     <div>
       {item &&
-        (oneLoading || isFetching ? (
-          <>...loading</>
-        ) : (
-          <>
-            <h3>{item.title}</h3>
-            <p>
-              <small>{String(new Date(item.time * 1000))}</small>
-            </p>
-            {item?.text && <p>{item.text}</p>}
-          <p>Go ahead <a href={item.url} target="_blank" rel="noreferrer">{item.url}</a></p>
-          </>
-        ))}
+        <div>
+        <h3>{item.title}</h3>
+        <div>
+          <p>
+            <small>{String(new Date(item.time * 1000))}</small>
+          </p>
+          {item?.text && <p>{item.text}</p>}
+          <p>
+            Go ahead{" "}
+            <a href={item.url} target="_blank" rel="noreferrer">
+              {item.url}
+            </a>
+          </p>
+        </div>
+        <div>
+          {item.kids &&
+            item.kids.map((comment) => <Comment id={comment} key={comment} parentFetching={isFetching} />)}
+        </div>
+      </div>}
     </div>
   );
 };
 
 export default NewsOneItem;
-
